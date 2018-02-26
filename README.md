@@ -1,4 +1,3 @@
 # newTesting
 
-
-Hello world.
+This is my testing field for learning GitHub...
