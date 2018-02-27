@@ -1,34 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 int lenghty(char *file)
 {
     int len=0;
-    while(file[len] != '\0')
+    while(file[len] != EOF)
     {
         len++;
     }
     return len;
 }
 
-int main()
+void FindWord(char *location,char *searchWord)
 {
-    char *text="Some basic text";
-    char *findy="text";
-    int i,j,textSize=lenghty(text),findSize=lenghty(findy),counter=0;
-    for(i=0;i<textSize-1;i++)
+    FILE *dataFile = fopen(location,"r");
+    char buffer[2000];
+    int i,j,counter=0;
+    if(!dataFile)
+        puts("Error");
+    puts("This is the text from file:\n");
+    while(fgets(buffer,2000,dataFile)!=NULL)
     {
-        for(j=0;j<findSize-1;j++)
+        printf("%s",buffer);
+    }
+    puts("\n");
+    fclose(dataFile);
+    for(i=0;i<lenghty(buffer);i++)
+    {
+        for(j=0;j<lenghty(searchWord);j++)
         {
-            if(text[i] == findy[j])
-               {
-                 counter++;
-                 if(counter==findSize)
-                    printf("Am gasit cuvant \"%s\" la pozitia %d",findy,i);
-
-               }
+            if(buffer[i] == searchWord[j])
+            {
+                counter++;
+                if(counter==lenghty(searchWord))
+                {
+                    printf("Am gasit cuvant %s\n",searchWord);
+                }
+            }
         }
     }
+}
+
+int main()
+{
+    char *loc="/home/john/Documents/fisier.txt";
+    FindWord(loc,"is");
+
     return 0;
 }
